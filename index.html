@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Socket App</title>
+	
+	<style type="text/css">
+		
+ * { margin: 0; padding: 0; box-sizing: border-box; }
+#interfaceForm
+{
+	background: #112d11;
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	padding: 3px;
+  z-index: 10;
+}
+#userForm
+{
+background: #112d11;
+padding-left: 10%;	
+padding-top: 3px;
+padding-bottom: 3px;
+
+}
+
+/*#online
+{
+  background: #a3c6ff;
+  position: fixed;
+  right: : 0;
+  z-index: 3;
+  width: 25%;
+  height: 100%;
+  display: none;
+  float: right;
+  margin-left: 75%;
+}*/
+#m
+{
+	border: 1px;
+	padding: 10px;
+	margin-right: .5%; 
+	width: 90%;
+}
+#user
+{
+	width: 60%;
+	height: 40px;
+
+}
+form button
+{
+	width: 9%;
+	background: #0fe27c;
+	border: none;
+	padding: 10px;
+}
+h1
+{
+	font-size: 100px;
+}
+h2
+{
+	font-size: 40px;
+}
+#createUser{text-align: center; padding-top:15%;}
+#chatInterface{display: none}
+#chatArea{height: 80%;width:70%; border-style: solid;border-width:1px; }
+ #messages { list-style-type: none; margin: 0; padding: 0;}
+ #messages li { padding: 5px 10px; font-weight:normal; padding-left: 30px;}
+ #messages li:nth-child(odd) { background: #eee;font-weight:bold;font-size:20px; color: #044c12; padding-left: 10px; }
+	</style>
+</head>
+<body>
+<div id="createUser">
+<h1>Welcome to Chat</h1>
+  <h2>Create your Nick Name</h2>
+  <form id="userForm">
+	<input type="text" placeholder="---------------------Register with your Nick Name--------------------" id="user"/>
+	<button>Create</button>
+  </form>		
+</div>
+<div id="chatInterface">
+<div >
+<ul id="messages"></ul>
+</div>
+	<form id="interfaceForm">
+		<input id="m"  autocomplete="off" />
+		<button>Send</button>
+	</form>
+</div>	
+<div id="rightCont">
+<div id="online">
+</div>
+</div>
+<script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+  var socket = io();
+
+
+  $('#userForm').submit(function(){
+  	socket.emit('user name',$('#user').val(),function(data){
+  		if(data)
+  		{
+  			$('#createUser').hide();
+  			$('#chatInterface').show();	
+        $('#online').show();
+  		}
+  		else
+  		{
+  			
+  			console.log("Enter Username");
+  		}
+  	});
+  	$('#user').val('');
+  	return false;
+  });
+
+
+  $('#chatInterface').submit(function(){
+    socket.emit('chat message', $('#m').val());
+    $('#m').val('');
+    return false;
+  });
+
+
+  socket.on('chat message',function(msg,name){
+  	$('#messages').append($('<li>').text(name+":"));
+  	$('#messages').append($('<li>').text(msg));
+  });
+</script>
+</body>
+</html>

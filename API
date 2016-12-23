@@ -1,0 +1,53 @@
+API
+ http
+ web
+ tcp
+ web socket
+ bitbox
+
+ redis pub serve channel
+
+
+
+
+
+
+
+ chat controller
+ socket handler
+ redis
+ message queue
+
+
+
+ 1.connect()---URL
+ 2.Events-----emitter=new eventEmitter()
+ 				emitter.on("recive"()=>{socket.emit()});//subscriper
+
+ 				emitter.emit("recive",{json:{msg:"message",user:"user"})//publisher
+
+
+Message Queue
+Bonds
+
+Impliment message queue
+Similuate load
+
+
+clients
+load balancer
+
+
+
+
+ask user name
+Socket.io website
+
+
+
+
+Stories
+1.load balancer
+2.publish
+3.message Queue
+4.Controller
